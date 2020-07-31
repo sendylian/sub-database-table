@@ -1,30 +1,30 @@
 spring:
-  # ShardingSphere ÅäÖÃÏî
+  # ShardingSphere é…ç½®é¡¹
   shardingsphere:
     datasource:
-      # ËùÓĞÊı¾İÔ´µÄÃû×Ö
+      # æ‰€æœ‰æ•°æ®æºçš„åå­—
       names: ds-orders-0, ds-orders-1
-      # ¶©µ¥ orders Êı¾İÔ´ÅäÖÃ 00
+      # è®¢å• orders æ•°æ®æºé…ç½® 00
       ds-orders-0:
-        type: com.zaxxer.hikari.HikariDataSource # Ê¹ÓÃ Hikari Êı¾İ¿âÁ¬½Ó³Ø
+        type: com.zaxxer.hikari.HikariDataSource # ä½¿ç”¨ Hikari æ•°æ®åº“è¿æ¥æ± 
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://10.0.111.222:3306/orders_0?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: root
-      # ¶©µ¥ orders Êı¾İÔ´ÅäÖÃ 01
+      # è®¢å• orders æ•°æ®æºé…ç½® 01
       ds-orders-1:
-        type: com.zaxxer.hikari.HikariDataSource # Ê¹ÓÃ Hikari Êı¾İ¿âÁ¬½Ó³Ø
+        type: com.zaxxer.hikari.HikariDataSource # ä½¿ç”¨ Hikari æ•°æ®åº“è¿æ¥æ± 
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://10.0.111.222:3306/orders_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: root
-    # ·ÖÆ¬¹æÔò
+    # åˆ†ç‰‡è§„åˆ™
     sharding:
       tables:
-        # orders ±íÅäÖÃ
+        # orders è¡¨é…ç½®
         orders:
-          actualDataNodes: ds-orders-0.orders_$->{[0,2,4,6]}, ds-orders-1.orders_$->{[1,3,5,7]} # Ó³Éäµ½ ds-orders-0 ºÍ ds-orders-1 Êı¾İÔ´µÄ orders ±íÃÇ
-          key-generator: # Ö÷¼üÉú³É²ßÂÔ
+          actualDataNodes: ds-orders-0.orders_$->{[0,2,4,6]}, ds-orders-1.orders_$->{[1,3,5,7]} # æ˜ å°„åˆ° ds-orders-0 å’Œ ds-orders-1 æ•°æ®æºçš„ orders è¡¨ä»¬
+          key-generator: # ä¸»é”®ç”Ÿæˆç­–ç•¥
             column: id
             type: SNOWFLAKE
           database-strategy:
@@ -35,18 +35,18 @@ spring:
             inline:
               algorithm-expression: orders_$->{user_id % 8}
               sharding-column: user_id
-        # order_config ±íÅäÖÃ
+        # order_config è¡¨é…ç½®
         order_config:
-          actualDataNodes: ds-orders-0.order_config # ½öÓ³Éäµ½ ds-orders-0 Êı¾İÔ´µÄ order_config ±í
-    # ÍØÕ¹ÊôĞÔÅäÖÃ
+          actualDataNodes: ds-orders-0.order_config # ä»…æ˜ å°„åˆ° ds-orders-0 æ•°æ®æºçš„ order_config è¡¨
+    # æ‹“å±•å±æ€§é…ç½®
     props:
       sql:
-        show: true # ´òÓ¡ SQL
+        show: true # æ‰“å° SQL
   main:
     allow-bean-definition-overriding: true
 
-# mybatis ÅäÖÃÄÚÈİ
+# mybatis é…ç½®å†…å®¹
 mybatis:
-  config-location: classpath:mybatis-config.xml # ÅäÖÃ MyBatis ÅäÖÃÎÄ¼şÂ·¾¶
-  mapper-locations: classpath:mapper/*.xml # ÅäÖÃ Mapper XML µØÖ·
-  type-aliases-package: com.sendy.subdt.po # ÅäÖÃÊı¾İ¿âÊµÌå°üÂ·¾¶
+  config-location: classpath:mybatis-config.xml # é…ç½® MyBatis é…ç½®æ–‡ä»¶è·¯å¾„
+  mapper-locations: classpath:mapper/*.xml # é…ç½® Mapper XML åœ°å€
+  type-aliases-package: com.sendy.subdt.po # é…ç½®æ•°æ®åº“å®ä½“åŒ…è·¯å¾„
