@@ -1,10 +1,12 @@
 package com.sendy.subdt.po;// OrderDO.java
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
  * 订单 DO
  */
+@TableName(value = "orders")
 @Data
 public class OrderDO {
 
